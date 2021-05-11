@@ -1,0 +1,23 @@
+{
+  "name": "pep_web11",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ravianandfbg/Pep_Web11.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ravianandfbg/Pep_Web11/issues"
+  },
+  "homepage": "https://github.com/ravianandfbg/Pep_Web11#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.9"
+  }
+}
