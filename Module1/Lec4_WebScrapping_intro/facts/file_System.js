@@ -19,7 +19,7 @@ console.log(myDocument)
 
 //document.querySelector("h1")
 
-let h1KaData = myDocument("h1").text;
+let h1KaData = myDocument("h1").text();
 // console.log(h1KaData); element => heerio => object from me data
 console.log(h1KaData);
 
