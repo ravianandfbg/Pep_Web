@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ravianandfbg/Pep_Web11#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.9",
+    "puppeteer": "^9.1.1",
     "request": "^2.88.2"
   }
 }
