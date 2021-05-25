@@ -12,8 +12,8 @@ let tab;
 let browserOpenPromise = puppeteer.launch({
   headless: false,
   defaultViewport: null,
-  args: ['--start-maximized']
-})
+  args: ["--start-maximized"],
+});
 
 // Promise<Pending>
 browserOpenPromise
