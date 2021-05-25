@@ -18,24 +18,24 @@ let browserOpenPromise = puppeteer.launch({
 // Promise<Pending>
 browserOpenPromise
   .then(function (browser) {
-    console.log('browser is opened !')
+    console.log('browser is opened !');
     return browser.pages()
   })
   .then(function (pages) {
     tab = pages[0]
-    return tab.goto('https://www.hackerrank.com/auth/login')
+    return tab.goto('https://www.hackerrank.com/auth/login');
   })
 
   //type email id
   .then(function () {
-    return tab.type('#input-1', id)
+    return tab.type('#input-1', id);
 
     // return tab.type("#input-1" , id , {delay : 100}); //both are same , only "delay" function is used to slow the type speed
   })
 
   //type password
   .then(function () {
-    return tab.type('#input-2', password)
+    return tab.type('#input-2', password);
     //   return tab.type("#input-2" , password , {delay : 100}); //both are same , only "delay" function is used to slow the type speed
   })
 
@@ -43,26 +43,34 @@ browserOpenPromise
   .then(function () {
     return tab.click(
       '.ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled'
-    )
+    );
   })
 
-  //   wait for promise pending ("#base-card-1-link") and then it will click on interview kit
-  //  wait to open "interview kit" selector and then click
-  .then(function () {
-    return tab.waitForSelector('#base-card-1-link', { visible : true })
-  })
-  //open "interviw kit"
-  .then(function () {
-    return tab.click('#base-card-1-link')
-  })
+.then(function () {
+    return waitAndClick("#base-card-1-link"); //make this function a promised function
+})
 
-  // wait to open "warm up challenges" selector and then click
-  .then(function () {
-    return tab.waitForSelector('a[data-attr1="warmup"]', { visible : true })
-  })
-  //open "warm up challenges"
-  .then(function () {
-      return tab.click('a[data-attr1="warmup"]');
-  });
+.then(function () {
+    return waitAndClick('a[data-attr1="warmup"]');
+})
+
+.catch(function(err){
+    console.log(err);
+})
+function waitAndClick(selector){
+    return new Promise(function(scb,fcb){
+        let waitPromise = tab.waitForSelector(selector , {visible : true});
+        waitPromise.then(function (){
+            let clickPromise = tab.click(selector);
+            return clickPromise;
+        })
+        .then(function (){
+            scb();
+        })
+        .then(function (){
+            fcb();
+        })
+    });
+}
 
   
