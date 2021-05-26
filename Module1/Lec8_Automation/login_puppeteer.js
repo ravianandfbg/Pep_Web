@@ -80,16 +80,35 @@ browserOpenPromise
     //Promise<Pending>
     return allPromisesCombined;
 })
+
 .then(function (allQuesLinks) {
-    console.log(allQuesLinks);
+    let oneQuesSolvePromise = solveQuestion(allQuesLinks[0]);
+    return oneQuesSolvePromise;
 })
+.then(function () {
+
+})
+
+
+
 .catch(function(err) {
     console.log(err);
 })
 
-.catch(function(err){
-    console.log(err);
-})
+function solveQuestion(quesLink){
+    return new Promise( function(scb,fcb) {
+        let gotoPromise = tab.goto("https://www.hackerrank.com"+quesLink);
+        gotoPromise.then(function () {
+        return waitAndClick('div[data-attr2="Editorial"]');
+        })
+        .then(function () {
+            console.log("browser is opened!!");
+        })
+    });
+}
+
+
+
 function waitAndClick(selector){
     return new Promise(function(scb,fcb){
         let waitPromise = tab.waitForSelector(selector , {visible : true});
