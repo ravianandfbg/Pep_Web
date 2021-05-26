@@ -89,7 +89,9 @@ browserOpenPromise
     let oneQuesSolvePromise = solveQuestion(allQuesLinks[0])
     return oneQuesSolvePromise
   })
-  .then(function () {})
+  .then(function () {
+      console.log("first question solved successfully !!!");
+  })
 
   .catch(function (err) {
     console.log(err)
@@ -142,6 +144,43 @@ function getCode(){
   }
 
 
+  function pasteCode(){
+    return new Promise(function(scb , fcb){
+      let waitAndClickPromise = waitAndClick('.checkbox-input');
+      waitAndClickPromise.then(function(){
+        return tab.waitForTimeout(2000); //wait for 2 second
+      })
+      .then(function(){
+        return tab.type('.custominput' , gCode);
+      })
+      .then(function(){
+        return tab.keyboard.down("Control");
+      })
+      .then(function(){
+        return tab.keyboard.press("A");
+      })
+      .then(function(){
+        return tab.keyboard.press("X");
+      })
+      .then(function(){
+        return tab.click('.monaco-scrollable-element.editor-scrollable.vs');
+      })
+      .then(function(){
+        return tab.keyboard.press("A");
+      })
+      .then(function(){
+        return tab.keyboard.press("V");
+      })
+      .then(function(){
+        return tab.keyboard.up("Control");
+      })
+      .then(function(){
+        scb();
+      })
+    })
+  }
+
+
 function solveQuestion (quesLink) {
   return new Promise(function (scb, fcb) {
     let gotoPromise = tab.goto('https://www.hackerrank.com' + quesLink)
@@ -153,8 +192,16 @@ function solveQuestion (quesLink) {
         return getCode();
       })
       .then(function () {
-          console.log("Got C++ code successfully !!");
-          console.log(gCode);
+          return tab.click('div[data-attr2="Problem"]');
+      })
+      .then(function () {
+          return pasteCode();
+      })
+      .then(function () {
+         return tab.click('.ui-btn.ui-btn-normal.ui-btn-primary');
+      })
+      .then(function () {
+          scb();
       })
       .catch(function () {
           fcb(error);
