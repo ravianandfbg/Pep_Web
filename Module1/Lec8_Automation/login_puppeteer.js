@@ -20,24 +20,24 @@ let browserOpenPromise = puppeteer.launch({
 // Promise<Pending>
 browserOpenPromise
   .then(function (browser) {
-    console.log('browser is opened !')
+    console.log('browser is opened !');
     return browser.pages()
   })
   .then(function (pages) {
     tab = pages[0]
-    return tab.goto('https://www.hackerrank.com/auth/login')
+    return tab.goto('https://www.hackerrank.com/auth/login');
   })
 
   //type email id
   .then(function () {
-    return tab.type('#input-1', id)
+    return tab.type('#input-1', id);
 
     // return tab.type("#input-1" , id , {delay : 100}); //both are same , only "delay" function is used to slow the type speed
   })
 
   //type password
   .then(function () {
-    return tab.type('#input-2', password)
+    return tab.type('#input-2', password);
     //   return tab.type("#input-2" , password , {delay : 100}); //both are same , only "delay" function is used to slow the type speed
   })
 
