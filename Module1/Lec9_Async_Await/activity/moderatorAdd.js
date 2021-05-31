@@ -44,7 +44,22 @@ async function addModerator(browser , tab){
             let newTab = await browser.newPage();
             await addModeratorToASingleQues(newTab , quesLink);
       }
+
+      // next button active hai to click on next
+
+    let allLis = await tab.$$('.pagination li');
+    let nextBtnLi = allLis[allLis.length-2];
+    let isDisabled = await tab.evaluate( function(elem){ return elem.classList.contains("disabled");  } , nextBtnLi );
+    // if true ??
+    if(isDisabled){
+        return;
+    }
+    // else false ??
+    await nextBtnLi.click();
+    await tab.waitForTimeout(5000);
+    await addModerators(browser , tab);
 }
+
 
 async function addModeratorToASingleQues(newTab , quesLink){
       await newTab.goto(quesLink);
@@ -57,4 +72,11 @@ async function addModeratorToASingleQues(newTab , quesLink){
       await newTab.waitForTimeout(2000);
       await newTab.close();
 }
+
+
+
+
+
+
+
 
