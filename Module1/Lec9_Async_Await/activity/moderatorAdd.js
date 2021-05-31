@@ -72,11 +72,3 @@ async function addModeratorToASingleQues(newTab , quesLink){
       await newTab.waitForTimeout(2000);
       await newTab.close();
 }
-
-
-
-
-
-
-
-
