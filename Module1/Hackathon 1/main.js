@@ -1,6 +1,7 @@
 const fs = require("fs");
 // const { type } = require("os");
 const puppeteer = require("puppeteer");
+let notify = require("./notification");;
 
 async function launch(){
       let browser = await puppeteer.launch({
