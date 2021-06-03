@@ -3,7 +3,8 @@ let fs = require("fs");
 async function gmailsend(email) {
   try {
     myEmail = "ravianandfbg@gmail.com";
-    pwd = fs.readFileSync("../password.txt", "utf-8");
+    pwd = ".ravi.anand.@2001";
+    // pwd = fs.readFileSync("../password.txt", "utf-8");
     let transport = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465, //587 for false
@@ -24,8 +25,8 @@ async function gmailsend(email) {
       text: "Here is your result!",
       attachments: [
         {
-          filename: "TestingCenters.json",
-          path: `./TestingCenters.json`,
+          filename: ["Coping.pdf" , "News.pdf" , "Preventations.pdf" , "Symptoms.pdf" , "Treatments.pdf"] , 
+          path: [`./Coping.pdf`, `News.pdf` , `Preventations.pdf` , `Symptoms.pdf` , `Treatments.pdf`]
         },
       ],
     };

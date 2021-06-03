@@ -1,5 +1,5 @@
 const fs = require("fs");
-// const { type } = require("os");
+const { type } = require("os");
 const puppeteer = require("puppeteer");
 let notify = require("./notification");;
 
@@ -26,29 +26,27 @@ async function launch(){
       await testing(tab);
       await delay(3000);
       await symptoms(tab , "Symptoms");
-      await tab.click('span[title="Preventation"]');
-      await preventation(tab);
+      await preventation(tab , "Preventations");
       await treatments(tab);
       await delay(4000);
       await news(tab);
       await delay(4000);
       await coping(tab);
       await delay(4000);
-      await vaccineCentres(tab); 
-      await delay(4000);
-      await VaccineSideEffect(tab);
-      await delay(4000);
-      await vaccineRecord(tab,"VaccineRecords");
-      await delay(4000);
+    //   await vaccineCentres(tab); 
+    //   await delay(4000);
+    //   await VaccineSideEffect(tab);
+    //   await delay(4000);
+    //   await vaccineRecord(tab,"VaccineRecords");
+    //   await delay(4000);
 
       await tab.goto("https://alpha2320.github.io/covid-19.io/");
-      await covidResources(tab , "OxygenCylinders" , 0);
-      await covidResources(tab , "PlasmaDonors" , 1);
-      await covidResources(tab , "HospitalBeds" , 2);
-      await covidResources(tab , "OnlineConsultation" , 3);
-      await covidResources(tab , "FoodSuply" , 4);
-      await covidResources(tab , "HomeQuarantine" , 5);
-      await covidResources(tab , "AmbulanceService" , 6);
+      await covidResources(tab, "OxygenCylinders", 0);
+      await covidResources(tab, "Hospitalbeds", 2);
+      await covidResources(tab, "Onlineconsultation", 3);
+      await covidResources(tab, "FoodSupply", 4);
+      await covidResources(tab, "HomeQuarantine", 5);
+      await covidResources(tab, "AmbulanceService", 6);
 
 }
 
@@ -96,6 +94,7 @@ async function covidCases(tab) {
           });
           if (i == rows.length - 1)
               fs.writeFileSync("CovidCases.json", JSON.stringify(covidcases));
+            // fs.writeFileSync("CovidCases.pdf" + covidCases);
       }
   }
 
@@ -151,29 +150,31 @@ async function covidCases(tab) {
                   else 
                         str = str+ "● " +variable + "\n";
                   
-                        fs.writeFileSync(word + ".txt" , "=> "  +word+ "\n\n"  +str);
+                        fs.writeFileSync(word + ".pdf" , "=> "  +word+ "\n\n"  +str);
             }
       }
 
-      async function preventation (tab) {
-            await tab.click('span[title="Prevention"]');
-            let data = await tab.$$('.bVNaN .PZPZlf');
-            let str = " ";
-            for(let i = 12 ; i < data.length ; i++){
-                  let line = await tab.evaluate( function(elem) { return elem.innerText} , data[i]);
+      async function preventation (tab , word) {
+                  await tab.click('span[title="Prevention"]');
+                  let data = await tab.$$('.bVNaN .PZPZlf');
+                  let str = " ";
+                  for(let i = 12 ; i < data.length ; i++){
+                        let line = await tab.evaluate( function(elem) { return elem.innerText} , data[i]);
+      
+                        if(i == 13 || i == 22){
+                              str = str + "\n\n* " +line;
+                        }
+                        else if(i == 21){
+                              str = str + "\n\n" +line;
+                        }
+                        else{
+                              str = str + "\n● " +line;
+                        }
+                  }
+                  fs.writeFileSync(word + ".pdf" , "=> " +word+ "\n\n" + str);
 
-                  if(i == 13 || i == 22){
-                        str = str + "\n\n* " +line;
-                  }
-                  else if(i == 21){
-                        str = str + "\n\n" +line;
-                  }
-                  else{
-                        str = str + "\n● " +line;
-                  }
             }
-            fs.writeFileSync("Preventation.txt" , "=> Preventation\n"+ str);
-      }
+            
       
 
       async function treatments(tab) {
@@ -202,8 +203,9 @@ async function covidCases(tab) {
                 else
                     str += "=> " + line + "\n";
             }
-            fs.writeFileSync("Treatments.txt", "=> Treatments\n\n" + str);
+            fs.writeFileSync("Treatments.pdf", "=> Treatments\n\n" + str);
         }
+
         async function news(tab) {
             await tab.click('span[title="News"]');
             await tab.waitForSelector(".JheGif.nDgy9d", { visible: true });
@@ -215,11 +217,10 @@ async function covidCases(tab) {
                 }, totalnews[i]);
                 str = str + (i + 1) + ". " + news + "\n\n";
             }
-            fs.writeFileSync("News.txt", "=> News\n\n" + str);
+            fs.writeFileSync("News.pdf", "=> News\n\n" + str);
         }
         async function coping(tab) {
             await tab.click('span[title="Coping"]');
-           // await tab.waitForSelector(".juDAUd .krw0Mb", { visible: true });
             let ans = "=> Coping\n\n";
             let general = await tab.$$(".bXATZd.j29TPc .PZPZlf");
             for (let i = 0; i < general.length; i++) {
@@ -236,102 +237,110 @@ async function covidCases(tab) {
                 }, subheadings[i]);
                 ans += (i + 1) + ". " + subheading + "\n";
             }
-            fs.writeFileSync("Coping.txt", ans);
+            fs.writeFileSync("Coping.pdf", ans);
         }
-        async function vaccineCentres(tab) {
-            await tab.click("input.gLFyf.gsfi");
-            await tab.keyboard.down("Control");
-            await tab.keyboard.press("A");
-            await tab.keyboard.press("X");
-            await tab.keyboard.up("Control");
-            await tab.type("input.gLFyf.gsfi", "vaccine centre near me");
-            await tab.keyboard.press("Enter");
-            await tab.waitForSelector(".MXl0lf.mtqGb.EhIML .wUrVib", { visible: true });
-            await delay(4000);
-            let clickdata = await tab.$(".MXl0lf.mtqGb.EhIML .wUrVib");
-            await tab.evaluate(function (ele) {
-                ele.click();
-            }, clickdata);
-            await tab.waitForSelector("div.dbg0pd", { visible: true });
-            let names = await tab.$$("div.dbg0pd");
-            let info = await tab.$$("div.f5Sf1");
-            let access = await tab.$$("div.dXnVAb");
-            let vaccineCenters = [];
-            for (let i = 0; i < names.length; i++) {
-                let name = await tab.evaluate(function (ele) {
-                    return ele.innerText;
-                }, names[i]);
-                let information;
-                if (i == 1 || i == 15 || i == 17)
-                    information = "Not available";
-                else if (i >= 2 && i <= 14) {
-                    information = await tab.evaluate(function (ele) {
-                        return ele.innerText;
-                    }, info[i - 1]);
-                }
-                else if (i == 16) {
-                    information = await tab.evaluate(function (ele) {
-                        return ele.innerText;
-                    }, info[i - 2]);
-                }
-                else if (i >= 18) {
-                    information = await tab.evaluate(function (ele) {
-                        return ele.innerText;
-                    }, info[i - 3]);
-                }
-                else if (i == 0) {
-                    information = await tab.evaluate(function (ele) {
-                        return ele.innerText;
-                    }, info[i]);
-                }
-                let req = await tab.evaluate(function (ele) {
-                    return ele.innerText;
-                }, access[i]);
-                let arr = req.split("\n");
-                let requirement = arr[0];
-                let limit = arr[1];
-                vaccineCenters.push({
-                    "Name": name,
-                    "Info": information,
-                    "Requirement": requirement,
-                    "Limit": limit
-                });
-                if (i == names.length - 1)
-                    fs.writeFileSync("VaccineCenters.json", JSON.stringify(vaccineCenters));
-            }
-            await tab.goBack();
-        }
-        async function VaccineSideEffect(tab) {
-            await tab.click('span[title="Side effects"]');
-            await tab.waitForSelector(".QsuZMe.oLxzIf", { visible: true });
-            let data = await tab.$(".QsuZMe.oLxzIf");
-            let data1 = await tab.evaluate(function (ele) {
-                return ele.innerText;
-            }, data);
-            fs.writeFileSync("VaccineSideEffects.txt", data1);
-        }
-        async function vaccineRecords(tab, word) {
-            let arr = [];
-            await tab.click('span[title="Statistics"]');
-            await tab.waitForSelector("tbody .viwUIc", { visible: true });
-            let rows = await tab.$$("tbody .viwUIc");
-            for (let i = 0; i < rows.length; i++) {
-                let columns = await rows[i].$$("td >div> div >span");
-                let location = await tab.evaluate(function (ele) {
-                    return ele.innerText;
-                }, columns[0]);
+
+
+        // async function vaccineCentres(tab) {
+        //     await tab.click("input.gLFyf.gsfi");
+        //     await tab.keyboard.down("Control");
+        //     await tab.keyboard.press("A");
+        //     await tab.keyboard.press("X");
+        //     await tab.keyboard.up("Control");
+        //     // // await tab.mouse.move(547, 187);
+        //     // await tab.mouse.click(547,187 , {button : 'left'});
+
+
+        //     await tab.type("input.gLFyf.gsfi", "vaccine centre near me");
+        //     await tab.keyboard.press("Enter");
+        //     await tab.waitForSelector(".MXl0lf.mtqGb.EhIML .wUrVib", { visible: true });
+        //     await delay(4000);
+        //     let clickdata = await tab.$(".MXl0lf.mtqGb.EhIML .wUrVib");
+        //     await tab.evaluate(function (ele) {
+        //         ele.click();
+        //     }, clickdata);
+        //     await tab.waitForSelector("div.dbg0pd", { visible: true });
+        //     let names = await tab.$$("div.dbg0pd");
+        //     let info = await tab.$$("div.f5Sf1");
+        //     let access = await tab.$$("div.dXnVAb");
+        //     let vaccineCenters = [];
+        //     for (let i = 0; i < names.length; i++) {
+        //         let name = await tab.evaluate(function (ele) {
+        //             return ele.innerText;
+        //         }, names[i]);
+        //         let information;
+        //         if (i == 1 || i == 15 || i == 17)
+        //             information = "Not available";
+        //         else if (i >= 2 && i <= 14) {
+        //             information = await tab.evaluate(function (ele) {
+        //                 return ele.innerText;
+        //             }, info[i - 1]);
+        //         }
+        //         else if (i == 16) {
+        //             information = await tab.evaluate(function (ele) {
+        //                 return ele.innerText;
+        //             }, info[i - 2]);
+        //         }
+        //         else if (i >= 18) {
+        //             information = await tab.evaluate(function (ele) {
+        //                 return ele.innerText;
+        //             }, info[i - 3]);
+        //         }
+        //         else if (i == 0) {
+        //             information = await tab.evaluate(function (ele) {
+        //                 return ele.innerText;
+        //             }, info[i]);
+        //         }
+        //         let req = await tab.evaluate(function (ele) {
+        //             return ele.innerText;
+        //         }, access[i]);
+        //         let arr = req.split("\n");
+        //         let requirement = arr[0];
+        //         let limit = arr[1];
+        //         vaccineCenters.push({
+        //             "Name": name,
+        //             "Info": information,
+        //             "Requirement": requirement,
+        //             "Limit": limit
+        //         });
+        //         if (i == names.length - 1)
+        //             fs.writeFileSync("VaccineCenters.json", JSON.stringify(vaccineCenters));
+        //     }
+        //     await tab.goBack();
+        // }
+
+
+        // async function VaccineSideEffect(tab) {
+        //     await tab.click('span[title="Side effects"]');
+        //     await tab.waitForSelector(".QsuZMe.oLxzIf", { visible: true });
+        //     let data = await tab.$(".QsuZMe.oLxzIf");
+        //     let data1 = await tab.evaluate(function (ele) {
+        //         return ele.innerText;
+        //     }, data);
+        //     fs.writeFileSync("VaccineSideEffects.txt", data1);
+        // }
+        // async function vaccineRecord(tab, word) {
+        //     let arr = [];
+        //     await tab.click('span[title="Statistics"]');
+        //     await tab.waitForSelector("tbody .viwUIc", { visible: true });
+        //     let rows = await tab.$$("tbody .viwUIc");
+        //     for (let i = 0; i < rows.length; i++) {
+        //         let columns = await rows[i].$$("td >div> div >span");
+        //         let location = await tab.evaluate(function (ele) {
+        //             return ele.innerText;
+        //         }, columns[0]);
         
-                let dosesGiven = await tab.evaluate(function (ele) {
-                    return ele.innerText;
-                }, columns[1]);
-                arr.push({
-                    "Location": location,
-                    "Doses given": dosesGiven,
-                });
-                if (i == rows.length - 1)
-                    fs.writeFileSync(word + ".json", JSON.stringify(arr));
-            }
-        }
+        //         let dosesGiven = await tab.evaluate(function (ele) {
+        //             return ele.innerText;
+        //         }, columns[1]);
+        //         arr.push({
+        //             "Location": location,
+        //             "Doses given": dosesGiven,
+        //         });
+        //         if (i == rows.length - 1)
+        //             fs.writeFileSync(word + ".json", JSON.stringify(arr));
+        //     }
+        // }
         async function covidResources(tab, boxname, i) {
            // await tab.waitForSelector(".text-2xl.font-semibold.items-center.py-6", { visible: true });
             let boxes = await tab.$$(".text-2xl.font-semibold.items-center.py-6");
