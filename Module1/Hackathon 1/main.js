@@ -382,5 +382,3 @@ async function covidCases(tab) {
         }
                         launch();
       
-      
-
