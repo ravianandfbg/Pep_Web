@@ -54,10 +54,15 @@ function appendTodo(todo){
       deleteTodoButton.classList.add("delete-todo"); //from this line <button class="delete-todo"></button> will create
       deleteTodoButton.textContent = "Delete"; //from this line <button class="delete-todo">Delete</button> will create
 
+      deleteTodoButton.addEventListener("click" , deleteTodo);
+
       todoItemDiv.append(pTag); //pTag will come in div
       todoItemDiv.append(deleteTodoButton); //after pTag, button tag will come under div
 
       todoList.append(todoItemDiv); //pTag and button Tag will come under div
 
-      
+}
+
+function deleteTodo(e){
+      e.target.parentNode.remove();
 }
