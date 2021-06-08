@@ -46,7 +46,7 @@ function appendTodo(todo){
 
       // for => <p class="todo-input">Learn CSS</p>
       let pTag = document.createElement("p"); //from this line empty <p></p> will create
-      pTag.classList.add("todo-input"); //from this line <p class="todo-input"></p> will create
+      pTag.classList.add("todo"); //from this line <p class="todo-input"></p> will create
       pTag.textContent = todo; //fro this line <p class="todo-input">Learn CSS</p> will create
 
       //for => <button class="delete-todo">Delete</button>
