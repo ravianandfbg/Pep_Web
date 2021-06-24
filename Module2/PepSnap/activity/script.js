@@ -1,6 +1,15 @@
 let videoElement = document.querySelector("video");
 let recordButton = document.querySelector(".inner-record");
 let capturePhoto = document.querySelector(".inner-capture");
+let filters = document.querySelectorAll(".filter");
+let filterSelected = "none";
+let zoomIn = document.querySelector(".zoomIn");
+let zoomOut = document.querySelector(".zoomOut");
+
+let minZoom = 1;
+let maxZoom = 3.1;
+let currentZoom = 1;
+
 let recordingState = false;
 let mediaRecorder;
 
@@ -41,16 +50,16 @@ let mediaRecorder;
       // start the recording
       mediaRecorder.start();
       recordingState = true;
-      recordButton.classList.add("animate-record");      
+      recordButton.classList.add("animate-record");
     }
   });
 
   capturePhoto.addEventListener("click", function () {
     capturePhoto.classList.add("animate-capture");
 
-    setTimeout( function(){
+    setTimeout(function () {
       capturePhoto.classList.remove("animate-capture");
-    }   , 1000  );
+    }, 1000);
 
     //   canvas
     let canvas = document.createElement("canvas");
@@ -59,8 +68,19 @@ let mediaRecorder;
 
     let ctx = canvas.getContext("2d");
 
+    if(currentZoom != 1){
+      ctx.translate(canvas.width/2 , canvas.height/2);
+      ctx.scale(currentZoom , currentZoom);
+      ctx.translate(-canvas.width/2 , -canvas.height/2);
+    }
+
     ctx.drawImage(videoElement, 0, 0);
-    
+
+    if (filterSelected != "none") {
+      ctx.fillStyle = filterSelected;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     // download canvas as an image
     let aTag = document.createElement("a");
     aTag.download = `Image${Date.now()}.jpg`;
@@ -68,3 +88,49 @@ let mediaRecorder;
     aTag.click();
   });
 })();
+
+for (let i = 0; i < filters.length; i++) {
+  filters[i].addEventListener("click", function (e) {
+    let currentFilterSelected = e.target.style.backgroundColor;
+    if (currentFilterSelected == "") {
+      if (document.querySelector(".filter-div")) {
+        document.querySelector(".filter-div").remove();
+        filterSelected = "none";
+        return;
+      }
+    }
+
+    console.log(currentFilterSelected);
+    if (filterSelected == currentFilterSelected) {
+      return;
+    }
+
+    let filterDiv = document.createElement("div");
+    filterDiv.classList.add("filter-div");
+    filterDiv.style.backgroundColor = currentFilterSelected;
+
+    if (filterSelected == "none") {
+      document.body.append(filterDiv);
+    } else {
+      document.querySelector(".filter-div").remove();
+      document.body.append(filterDiv);
+    }
+    filterSelected = currentFilterSelected;
+  });
+}
+
+zoomIn.addEventListener("click", function () {
+  if (currentZoom + 0.1 > maxZoom) {
+    return;
+  }
+  currentZoom = currentZoom + 0.1;
+  videoElement.style.transform = `scale(${currentZoom})`;
+});
+
+zoomOut.addEventListener("click", function () {
+  if (currentZoom - 0.1 < minZoom) {
+    return;
+  }
+  currentZoom = currentZoom - 0.1;
+  videoElement.style.transform = `scale(${currentZoom})`;
+});
