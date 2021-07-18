@@ -42,6 +42,21 @@ function attachClickAndBlurEventOnCell() {
       let cellObject = getCellObjectFromElement(e.target);
       address.value = cellObject.name;
       formulaInput.value = cellObject.formula;
+
+      let allActiveMenus = document.querySelectorAll(".active-menu");
+      if (allActiveMenus) {
+        for (let i = 0; i < allActiveMenus.length; i++) {
+          allActiveMenus[i].classList.remove("active-menu");
+        }
+      }
+
+      let {bold , underline , italic} = cellObject.fontStyles;
+      bold && document.querySelector(".bold").classList.add("active-menu");
+      underline && document.querySelector(".underline").classList.add("active-menu");
+      italic && document.querySelector(".italic").classList.add("active-menu");
+
+      let textAlign = cellObject.textAlign;
+      document.querySelector("."+textAlign).classList.add("active-menu");
     });
 
     allCells[i].addEventListener("blur", function (e) {
