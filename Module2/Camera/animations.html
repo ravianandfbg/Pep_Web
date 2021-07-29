@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      div {
+        height: 10rem;
+        width: 10rem;
+        position: fixed;
+      }
+
+      .top-left {
+        top: 0;
+        left: 0;
+        animation: moveRight;
+        animation-duration: 2s;
+        animation-fill-mode: forwards;
+      }
+
+      .bottom-left {
+        bottom: 0;
+        left: 0;
+        animation: moveUp;
+        animation-duration: 2s;
+        animation-delay: 6s;
+        animation-fill-mode: forwards;
+      }
+
+      .bottom-right {
+        bottom: 0;
+        right: 0;
+        animation: moveLeft;
+        animation-duration: 2s;
+        animation-delay: 4s;
+        animation-fill-mode: forwards;
+      }
+
+      .top-right {
+        top: 0;
+        right: 0;
+        animation: moveDown;
+        animation-duration: 2s;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes moveRight {
+        0% {
+          top: 0vh;
+          left: 0vw;
+        }
+
+        100% {
+          top: 0vh;
+          left: calc(100vw - 10rem);
+        }
+      }
+
+      @keyframes moveLeft {
+        0% {
+          bottom: 0vh;
+          right: 0vw;
+        }
+
+        100% {
+          bottom: 0vh;
+          right: calc(100vw - 10rem);
+        }
+      }
+
+      @keyframes moveDown {
+        0% {
+          top: 0vh;
+          right: 0vw;
+        }
+
+        100% {
+          top: calc(100vh - 10rem);
+          right: 0vw;
+        }
+      }
+
+      @keyframes moveUp {
+        0% {
+          bottom: 0vh;
+          left: 0vw;
+        }
+
+        100% {
+          bottom: calc(100vh - 10rem);
+          left: 0vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-left" style="background-color: navy"></div>
+    <div class="top-right" style="background-color: red"></div>
+    <div class="bottom-left" style="background-color: green"></div>
+    <div class="bottom-right" style="background-color: yellow"></div>
+  </body>
+</html>
