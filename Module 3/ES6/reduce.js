@@ -14,6 +14,8 @@ console.log(reducedValue);
 // myReduce
 
 function myReduce(arr , fun){
+      // fun = sum
+      //arr = [1,2,3]
       
       let ans = arr[0];
 
