@@ -7,4 +7,4 @@ function isEven(x){
 let FilterArr = a.map(isEven);
 
 console.log(a);
-console.log(FilterArr)
+console.log(FilterArr);
