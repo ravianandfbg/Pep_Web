@@ -29,4 +29,4 @@ function fn1(x, y) {
       return 3 * x;
     }
     
-    let fa3 = x => 3 * x
+    let fa3 = x => 3 * x;
