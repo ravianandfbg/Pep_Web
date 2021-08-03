@@ -11,6 +11,15 @@ import MyComp from "./MyComp";
 
 ReactDOM.render(
             //     <App />, // ek component
-                <MyComp />,
-                document.getElementById("root") // aur ek jagah jeha us component ko dikhana hai
+            //     <MyComp />,
+
+            <div>
+                  <MyComp />
+                  <MyComp />
+                  <MyComp />
+                  <MyComp />
+                  <MyComp />
+            </div>,
+
+                document.querySelector("#root") // aur ek jagah jeha us component ko dikhana hai
                 ); 

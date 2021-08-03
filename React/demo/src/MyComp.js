@@ -2,7 +2,7 @@ import React from "react";
 
 class MyComp extends React.Component{
       state = {
-            someNumber : 0,
+            someNumber : 10,
       };
 
       render = () => {
@@ -13,10 +13,12 @@ class MyComp extends React.Component{
                   <div>
                         <button
                         onClick = { () => {
-                              this.setState({someNumber : this.state.someNumber + 1});
+                              // this.setState({someNumber : this.state.someNumber + 1}); // for increment
+                              this.setState({someNumber : this.state.someNumber - 1}); // for decrement
                         } }
                         >
-                              increment
+                              {/* increment */}
+                              decrement
 
                         </button>
                         <h1> {this.state.someNumber} </h1>
