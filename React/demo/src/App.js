@@ -3,7 +3,7 @@ import React from "react";
 class App extends React.Component {
   state = {
     tasks: ["make coffee", "make notes", "go for a jog", "new task"],
-    currInput: "abc",
+    currInput: "",
   };
 
   render = () => {
@@ -13,9 +13,18 @@ class App extends React.Component {
           type="text"
           onChange={(e) => {
             this.setState({ currInput: e.currentTarget.value });
-            console.log(e.currentTarget.value);
+            // console.log(e.currentTarget.value);
           }}
-          value={this.state.currInput}
+
+          // value={this.state.currInput}
+          onKeyDown = {(e) => {
+            if(e.key == "Enter"){
+              this.setState ({
+                tasks : [...this.state.tasks , this.state.currInput],
+                currInput: "",
+              });
+            }
+          }}
         />
 
         <ul>
