@@ -15,9 +15,13 @@ ReactDOM.render(
 
             <div>
                   <MyComp />
+                  <hr />
                   <MyComp />
+                  <hr />
                   <MyComp />
+                  <hr />
                   <MyComp />
+                  <hr />
                   <MyComp />
             </div>,
 
