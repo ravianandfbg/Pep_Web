@@ -1,4 +1,4 @@
-let List = (props) => { // props : we can give datausing props ; App(parent component) -------> List(child component)
+let List = (props) => { // props : we can give data from parent to child using props ; App(parent component) -------> List(child component)
       return (
         <ul>
           {props.tasks.map((el) => {
