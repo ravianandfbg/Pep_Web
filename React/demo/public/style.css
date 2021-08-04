@@ -9,7 +9,8 @@ body {
 }
 
 .input-box {
-      height: 5rem;
+  height: 5rem;
+  background-color: #3498db;
   display: block;
   width: 30rem;
   margin: auto;
