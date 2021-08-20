@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table,
+      tr,
+      th,
+      td,
+      tbody,
+      thead {
+        border: 1px solid;
+        border-collapse: collapse;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      th,td{
+          height: 3rem;
+          width: 8rem;
+          text-align: center;
+      }
+
+      td button{
+          border:none;
+          background-color: red;
+          color: white;
+          padding: 5px;
+          border-radius: 10px;
+      }
+
+      th{
+        background: #898989;
+        border: 1px solid #898989;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="open">Click me to open the database</button>
+    <hr />
+    <!-- i will write my note here  -->
+    <input type="text" />
+    <!-- use this button to save, if use tries to save a note before we get acces to database  -->
+    <!-- alert data base has not been opened yet  -->
+    <button id="add">Add Note</button>
+
+    <hr />
+
+    <button data-open="false" id="view">view Notes</button>
+
+    <table>
+      
+    </table>
+
+    <script src="script.js"></script>
+  </body>
+</html>
