@@ -1,7 +1,7 @@
 //npm install puppeteer => install in package.json
 
 const puppeteer = require('puppeteer')
-const id = 'rilaj74184@brayy.com'
+const id = 'bemema2767@mxgsby.com'
 const password = '123456'
 let tab
 let idx
