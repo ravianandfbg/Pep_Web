@@ -66,7 +66,7 @@ async function addModeratorToASingleQues(newTab , quesLink){
       await newTab.waitForTimeout(2000);
       await newTab.click('li[data-tab="moderators"]');
       await newTab.waitForSelector('#moderator' , {visible:true});
-      await newTab.type("#moderator" , "ravianandfbg");
+      await newTab.type("#moderator" , "Ravi_Anand");
       await newTab.click('.btn.moderator-save');
       await newTab.click('.save-challenge.btn.btn-green');
       await newTab.waitForTimeout(2000);
