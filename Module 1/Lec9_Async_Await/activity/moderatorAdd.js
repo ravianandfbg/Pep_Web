@@ -1,5 +1,5 @@
-const id = "pamico3332@nic58.com";
-const pw = "12345678";
+const id = 'rilaj74184@brayy.com'
+const pw = "123456";
 const puppeteer = require("puppeteer");
 
 async function login(){
